@@ -4,12 +4,13 @@ function onReady() {
 
   function createNewToDo() {
     const newToDoText = document.getElementById('newToDoText');
-    if (!newToDoText) { return };
+    if (!newToDoText.value) { return };
 
     toDos.push({
       title: newToDoText.value,
       complete: false
     });
+
     newToDoText.value = '';
 
     renderTheUI(toDos);
@@ -24,11 +25,22 @@ function onReady() {
       const newLi = document.createElement('li');
       const checkbox = document.createElement('input');
       checkbox.type = "checkbox";
+      const deleteButton = document.createElement('button');
+      const buttonText = document.createTextNode('Delete To-Do');
 
       newLi.textContent = toDo.title;
 
       toDoList.appendChild(newLi);
       newLi.appendChild(checkbox);
+      newLi.appendChild(deleteButton);
+      deleteButton.appendChild(buttonText);
+
+      deleteButton.addEventListener('click', event => {
+      event.preventDefault();
+      toDoList.removeChild(newLi);
+      toDos.pop();
+
+    });
     });
   }
 
